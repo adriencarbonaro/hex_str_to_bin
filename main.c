@@ -30,12 +30,11 @@ int main (int argc, char *argv[]) {
     while (1) {
         read = fscanf(f_in, "%2hhx", content);
         if (feof(f_in)) {
+            fwrite((void *)content, sizeof(unsigned char), 1, f_out);
             fclose(f_in);
             fclose(f_out);
-            return -1;
-        } 
-
-        if (read != 1 || ferror(f_in))  {
+            return 0;
+        } else if (read != 1 || ferror(f_in)) {
             printf("error reading file\n");
             fclose(f_in);
             fclose(f_out);
